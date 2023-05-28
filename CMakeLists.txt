@@ -3,4 +3,4 @@ project(database)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(database main.cpp Huffman.cpp Huffman.h)
+add_executable(database main.cpp Huffman.cpp Huffman.h tinyxml2.cpp tinyxml2.h)
