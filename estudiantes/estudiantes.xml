@@ -1,74 +1,74 @@
 ﻿<estudiantes>
-  <estudiante>
+  <estudiantes>
     <nombre>John</nombre>
     <apellidos>Doe</apellidos>
     <carnet>1234</carnet>
     <edad>20</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Jane</nombre>
     <apellidos>Smith</apellidos>
     <carnet>5678</carnet>
     <edad>19</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>David</nombre>
     <apellidos>Johnson</apellidos>
     <carnet>9012</carnet>
     <edad>22</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Emily</nombre>
     <apellidos>Williams</apellidos>
     <carnet>3456</carnet>
     <edad>21</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Michael</nombre>
     <apellidos>Brown</apellidos>
     <carnet>7890</carnet>
     <edad>20</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Sarah</nombre>
     <apellidos>Davis</apellidos>
     <carnet>2345</carnet>
     <edad>19</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Christopher</nombre>
     <apellidos>Miller</apellidos>
     <carnet>6789</carnet>
     <edad>21</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Amanda</nombre>
     <apellidos>Wilson</apellidos>
     <carnet>0123</carnet>
     <edad>22</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Matthew</nombre>
     <apellidos>Anderson</apellidos>
     <carnet>4567</carnet>
     <edad>19</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Olivia</nombre>
     <apellidos>Taylor</apellidos>
     <carnet>8901</carnet>
     <edad>20</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>James</nombre>
     <apellidos>Lee</apellidos>
     <carnet>5432</carnet>
     <edad>21</edad>
-  </estudiante>
-  <estudiante>
+  </estudiantes>
+  <estudiantes>
     <nombre>Sophia</nombre>
     <apellidos>Moore</apellidos>
     <carnet>9876</carnet>
     <edad>19</edad>
-  </estudiante>
+  </estudiantes>
 </estudiantes>
