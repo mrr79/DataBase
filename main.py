@@ -1,8 +1,9 @@
 from verification import Verification
-from select_sql import Select
+#from select_sql import Select
+from where import Select
 
 if __name__ == "__main__":
-    folder = '/home/mrr/Desktop/DATABASE'  # Ruta de la carpeta principal
+    folder = '/home/mrr/Desktop/DataBase'  # Ruta de la carpeta principal
     verification = Verification(folder)
     query = Select(folder)
 
@@ -12,4 +13,4 @@ if __name__ == "__main__":
     # Verificar la existencia del archivo y ejecutar la consulta
     if verification.verify_file(file_name):
         query.execute_query(file_name)
-
+        

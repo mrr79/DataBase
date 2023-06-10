@@ -18,15 +18,14 @@ class Select:
         root = tree.getroot()
 
         # Obtener los elementos de la tabla
-        #rows = root.findall('.//alumnos')
         rows = root.findall('.//' + folder_name)
+
         # Verificar si hay filas en el archivo XML
         if len(rows) == 0:
             print("No hay filas en el archivo XML.")
             return
 
         # Obtener los nombres de los atributos
-       # Obtener los nombres de los atributos
         if columns is None:
             columns_input = input("Ingrese los nombres de los atributos separados por comas (* para seleccionar todos): ")
             if columns_input.strip() == "*":
@@ -60,3 +59,4 @@ class Select:
             if match:
                 filtered_rows.append(row)
         return filtered_rows
+
