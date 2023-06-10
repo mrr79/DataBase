@@ -1,5 +1,5 @@
 from verification import Verification
-#from select_sql import Select
+
 from where import Select
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 import re
+from join import Join  # Importar la clase Join del archivo join.py
 
 class Select:
     def __init__(self, folder_path):
@@ -35,13 +36,41 @@ class Select:
                 columns = [column.strip() for column in columns_input.split(',')] if columns_input else [child.tag for child in rows[0]]
 
         # Imprimir las filas seleccionadas
-        answer = input("¿agregar WHERE? (Y/N): ")
+        answer = input("¿Agregar WHERE? (Y/N): ")
+        if answer.lower() == 'n':
+            join_objeto = Join()
+            join_file = input("Ingrese el nombre del archivo para realizar el JOIN (sin la extensión .xml): ")
+            join_folder_name = join_file
+            join_folder_path = os.path.join(self.folder_path, join_folder_name)
+            join_xml_file = os.path.join(join_folder_path, join_file + ".xml")
+
+            join_tree = ET.parse(join_xml_file)
+            join_root = join_tree.getroot()
+
+            join_rows = join_root.findall('.//' + join_folder_name)
+
+            # Realizar el JOIN utilizando la instancia de la clase Join
+            filtered_rows = join_objeto.perform_join(rows, join_rows)
+
         if answer.lower() == 'y':
             where_conditions = input("Ingrese las condiciones WHERE separadas por comas (columna=valor): ")
             conditions = self.parse_conditions(where_conditions)
             filtered_rows = self.filter_rows(rows, conditions)
         else:
-            filtered_rows = rows
+            join_objeto = Join()
+            join_file = input("Ingrese el nombre del archivo para realizar el JOIN (sin la extensión .xml): ")
+            join_folder_name = join_file
+            join_folder_path = os.path.join(self.folder_path, join_folder_name)
+            join_xml_file = os.path.join(join_folder_path, join_file + ".xml")
+
+            join_tree = ET.parse(join_xml_file)
+            join_root = join_tree.getroot()
+
+            join_rows = join_root.findall('.//' + join_folder_name)
+
+            # Realizar el JOIN utilizando la instancia de la clase Join
+            filtered_rows = join_objeto.perform_join(rows, join_rows)
+
 
         # Imprimir las filas seleccionadas
         for row in filtered_rows:
@@ -94,5 +123,3 @@ class Select:
 
             if match:
                 filtered_rows.append(row)
-
-        return filtered_rows
