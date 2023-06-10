@@ -35,7 +35,7 @@ class Select:
                 columns = [column.strip() for column in columns_input.split(',')] if columns_input else [child.tag for child in rows[0]]
 
         # Imprimir las filas seleccionadas
-        answer = input("¿Desea agregar una cláusula WHERE? (Y/N): ")
+        answer = input("¿agregar WHERE? (Y/N): ")
         if answer.lower() == 'y':
             where_conditions = input("Ingrese las condiciones WHERE separadas por comas (columna=valor): ")
             conditions = self.parse_conditions(where_conditions)
