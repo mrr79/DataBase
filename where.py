@@ -47,16 +47,38 @@ class Select:
             values = [row.find(attribute).text for attribute in columns]
             print(values)
 
+    
     def filter_rows(self, rows, conditions):
         filtered_rows = []
         for row in rows:
             match = True
             for condition in conditions:
-                column, value = condition.split('=')
-                if row.find(column).text != value:
+                if '=' in condition:
+                    column, value = condition.split('=', 1)
+                    operator = '='
+                elif '<' in condition:
+                    column, value = condition.split('<', 1)
+                    operator = '<'
+                elif '>' in condition:
+                    column, value = condition.split('>', 1)
+                    operator = '>'
+                else:
+                    # Si no se especifica un operador, se asume igualdad
+                    column, value = condition, None
+                    operator = '='
+
+                cell_value = row.find(column).text
+                if operator == '=' and cell_value != value:
                     match = False
                     break
+                elif operator == '<' and not (cell_value is not None and float(cell_value) < float(value)):
+                    match = False
+                    break
+                elif operator == '>' and not (cell_value is not None and float(cell_value) > float(value)):
+                    match = False
+                    break
+            
             if match:
                 filtered_rows.append(row)
+        
         return filtered_rows
-
