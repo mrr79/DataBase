@@ -1,5 +1,6 @@
 import os
 import xml.etree.ElementTree as ET
+import re
 
 class Select:
     def __init__(self, folder_path):
@@ -37,7 +38,7 @@ class Select:
         answer = input("¿Desea agregar una cláusula WHERE? (Y/N): ")
         if answer.lower() == 'y':
             where_conditions = input("Ingrese las condiciones WHERE separadas por comas (columna=valor): ")
-            conditions = [condition.strip() for condition in where_conditions.split(' AND ')] if where_conditions else []
+            conditions = self.parse_conditions(where_conditions)
             filtered_rows = self.filter_rows(rows, conditions)
         else:
             filtered_rows = rows
@@ -47,38 +48,51 @@ class Select:
             values = [row.find(attribute).text for attribute in columns]
             print(values)
 
-    
+    def parse_conditions(self, where_conditions):
+        conditions = []
+        condition_groups = re.split(r'\bOR\b', where_conditions)  # Separar las condiciones por "OR"
+        for group in condition_groups:
+            conditions_in_group = [condition.strip() for condition in re.split(r'\bAND\b', group)]  # Separar las condiciones por "AND"
+            conditions.append(conditions_in_group)
+        return conditions
+
     def filter_rows(self, rows, conditions):
         filtered_rows = []
         for row in rows:
-            match = True
-            for condition in conditions:
-                if '=' in condition:
-                    column, value = condition.split('=', 1)
-                    operator = '='
-                elif '<' in condition:
-                    column, value = condition.split('<', 1)
-                    operator = '<'
-                elif '>' in condition:
-                    column, value = condition.split('>', 1)
-                    operator = '>'
-                else:
-                    # Si no se especifica un operador, se asume igualdad
-                    column, value = condition, None
-                    operator = '='
+            match = False
+            for condition_group in conditions:
+                group_match = True
+                for condition in condition_group:
+                    if '=' in condition:
+                        column, value = condition.split('=', 1)
+                        operator = '='
+                    elif '<' in condition:
+                        column, value = condition.split('<', 1)
+                        operator = '<'
+                    elif '>' in condition:
+                        column, value = condition.split('>', 1)
+                        operator = '>'
+                    else:
+                        # Si no se especifica un operador, se asume igualdad
+                        column, value = condition, None
+                        operator = '='
 
-                cell_value = row.find(column).text
-                if operator == '=' and cell_value != value:
-                    match = False
+                    cell_value = row.find(column).text
+                    if operator == '=' and cell_value != value:
+                        group_match = False
+                        break
+                    elif operator == '<' and not (cell_value is not None and float(cell_value) < float(value)):
+                        group_match = False
+                        break
+                    elif operator == '>' and not (cell_value is not None and float(cell_value) > float(value)):
+                        group_match = False
+                        break
+
+                if group_match:
+                    match = True
                     break
-                elif operator == '<' and not (cell_value is not None and float(cell_value) < float(value)):
-                    match = False
-                    break
-                elif operator == '>' and not (cell_value is not None and float(cell_value) > float(value)):
-                    match = False
-                    break
-            
+
             if match:
                 filtered_rows.append(row)
-        
+
         return filtered_rows
