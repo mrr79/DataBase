@@ -9,7 +9,7 @@ class Join:
                     join_rows.append(row1)
                     break
         return join_rows
-
+#este es un comentario de prueba
     def rows_match(row1, row2, attribute):
         value1 = row1.find(attribute).text
         value2 = row2.find(attribute).text
