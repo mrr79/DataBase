@@ -1,16 +1,1 @@
- #                      prueba de condiciones pt1.
-FROM (sin la extensión .xml): estudiantes
-si esta la carpeta
-FOLDER NAME: estudiantes
-FOLDER PATH: /home/mrr/Desktop/DataBase/estudiantes
-FILE NAME: estudiantes.xml
-Ingrese los nombres de los atributos separados por comas (* para seleccionar todos): carnet
-¿Desea agregar una cláusula WHERE? (Y/N): Y
-Ingrese las condiciones WHERE separadas por comas (columna=valor): edad=19
-['5678']
-['2345']
-['4567']
-['9876']
-
-
-#########
+en join pt4: sin condiciones dentro del jin o sea no se puede hacer join on AND otra cosa tampoco hacer jooin con dos files al mismo tiempo.

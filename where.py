@@ -67,9 +67,11 @@ class Select:
             # Realizar el JOIN aquí
             join_objeto.imprimir_valores(filtered_rows)
             print("JOIN realizado")
+            #filtered rows son las que ya cumplieron las condiciones del WHERE
             join_filtered_rows = join_objeto.perform_join(filtered_rows, join_rows)
             print("Filas seleccionadas:")
             for row in join_filtered_rows:
+                #imprimo las que cumplieron con lo del JOIN
                 values = [row.find(attribute).text for attribute in columns]
                 print(values)
         else:
