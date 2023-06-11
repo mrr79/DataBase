@@ -1,1 +1,5 @@
 en join pt4: sin condiciones dentro del jin o sea no se puede hacer join on AND otra cosa tampoco hacer jooin con dos files al mismo tiempo.
+
+JOIN Pt5
+solo compara que carnet por ej, en los dos files, sea el mismo. El usuario digita cual quiere que sea la misma en las dos carpetas, pero ambas tienen que tener el mismo nombre.
+
