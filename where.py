@@ -56,6 +56,7 @@ class Select:
             print("JOIN realizado")
             print("Filas seleccionadas:")
             for row in filtered_rows:
+                
                 values = [row.find(attribute).text for attribute in columns]
                 print(values)
         else:
