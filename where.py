@@ -52,12 +52,24 @@ class Select:
         answer_join = input("¿hacer JOIN (Y/N)? ")
         if answer_join.lower() == 'y':
             print("Mariana has el join")
+
+            join_file = input("Ingrese el nombre del archivo para realizar el JOIN (sin la extensión .xml): ")
+            join_folder_name = join_file
+            join_folder_path = os.path.join(self.folder_path, join_folder_name)
+            join_xml_file = os.path.join(join_folder_path, join_file + ".xml")
+
+            join_tree = ET.parse(join_xml_file)
+            join_root = join_tree.getroot()
+
+            join_rows = join_root.findall('.//' + join_folder_name)
+
             join_objeto = Join()
             # Realizar el JOIN aquí
             join_objeto.imprimir_valores(filtered_rows)
             print("JOIN realizado")
+            join_filtered_rows = join_objeto.perform_join(filtered_rows, join_rows)
             print("Filas seleccionadas:")
-            for row in filtered_rows:
+            for row in join_filtered_rows:
                 values = [row.find(attribute).text for attribute in columns]
                 print(values)
         else:
