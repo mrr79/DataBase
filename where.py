@@ -1,7 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 import re
-
+from join import Join
 class Select:
     def __init__(self, folder_path):
         self.folder_path = folder_path
@@ -52,11 +52,12 @@ class Select:
         answer_join = input("¿hacer JOIN (Y/N)? ")
         if answer_join.lower() == 'y':
             print("Mariana has el join")
+            join_objeto = Join()
             # Realizar el JOIN aquí
+            join_objeto.imprimir_valores(filtered_rows)
             print("JOIN realizado")
             print("Filas seleccionadas:")
             for row in filtered_rows:
-                
                 values = [row.find(attribute).text for attribute in columns]
                 print(values)
         else:
