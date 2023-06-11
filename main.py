@@ -14,3 +14,4 @@ if __name__ == "__main__":
     if verification.verify_file(file_name):
         query.execute_query(file_name)
         
+

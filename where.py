@@ -53,7 +53,7 @@ class Select:
         if answer_join.lower() == 'y':
             print("Mariana has el join")
 
-            join_file = input("Ingrese el nombre del archivo para realizar el JOIN (sin la extensión .xml): ")
+            join_file = input("JOIN ")
             join_folder_name = join_file
             join_folder_path = os.path.join(self.folder_path, join_folder_name)
             join_xml_file = os.path.join(join_folder_path, join_file + ".xml")
@@ -68,7 +68,7 @@ class Select:
             join_objeto.imprimir_valores(filtered_rows)
             print("JOIN realizado")
             #filtered rows son las que ya cumplieron las condiciones del WHERE
-            join_filtered_rows = join_objeto.perform_join(filtered_rows, join_rows)
+            join_filtered_rows = join_objeto.perform_join(folder_name,filtered_rows)
             print("Filas seleccionadas:")
             for row in join_filtered_rows:
                 #imprimo las que cumplieron con lo del JOIN
