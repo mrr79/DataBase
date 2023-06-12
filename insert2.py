@@ -30,11 +30,11 @@ nuevo_producto = ET.Element('productos')
 
 # Crear el elemento 'nombre' y establecer su texto
 nombre = ET.SubElement(nuevo_producto, 'nombre')
-nombre.text = 'Nuevo productoMRRRRRRRRRRRRR'
+nombre.text = 'Nuevo producto en MARIANITAA'
 
 # Crear el elemento 'precio' y establecer su texto
 precio = ET.SubElement(nuevo_producto, 'precio')
-precio.text = '197'
+precio.text = '420'
 
 # Agregar el nuevo producto al elemento raíz
 root.append(nuevo_producto)
