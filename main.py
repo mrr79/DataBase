@@ -31,7 +31,7 @@ if __name__ == "__main__":
         if verification.verify_file(file_name):
             delete_query.execute_query(file_name)
     elif opcion == 4:
-        file_name = input(" DELETE FROM (sin la extensión .xml): ") + ".xml"
+        file_name = input(" UPDATE ") + ".xml"
         if verification.verify_file(file_name):
             update_query.execute_query(file_name)
     else:
