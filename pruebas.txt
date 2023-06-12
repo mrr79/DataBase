@@ -9,4 +9,4 @@
         file_root = file_tree.getroot()
         file_rows = file_root.findall('.//' + file_name)
 
-        print("file inseert rows:", file_rows)
+************************* JOIN PARTE 4: HACE CAMBIO LOCAL, COMMIT. FALTA DEL IMPUT DE LOS DATOS EN LAS CELDAS.
