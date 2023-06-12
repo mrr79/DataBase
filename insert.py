@@ -36,6 +36,11 @@ class Insert:
             file_rows = file_root.findall('.//' + file_name)
 
             print("File insert rows:", file_rows)
+
+            #values = input("VALUES: ")
+            
+            #print("estos son los values", self.value)
+
             self.update_xml(file_name, xml_file, attributes_str)
             return file_name, attributes_str, xml_file, attributes_str
 
@@ -44,7 +49,7 @@ class Insert:
             return None
 
     @staticmethod
-    def update_xml(file_name, ruta_xml_original, attributes_str, ruta_local=None):
+    def update_xml(file_name, ruta_xml_original, attributes_str, ruta_local=None,value=None):
         print("                             estoy en UPDATE DENTRO  ")
         ruta_local = '/home/mrr/Desktop/DataBase/local'
         ruta_auxiliar = os.path.join(ruta_local, file_name)
@@ -61,12 +66,18 @@ class Insert:
 
         attributes = attributes_str.split(',')  # Dividir los valores de atributos por coma
 
-        for attribute_name in attributes:
-            atributo = ET.SubElement(nuevo_, attribute_name)
-            atributo.text = 'Nuevo producto en MARIANITAA'
+        value = [('Producto 1', 10.99),
+                 ('Producto 2', 15.99),
+                 ('Producto 3', 20.99)]
 
-        # Agregar el elemento 'nuevo_' al elemento raíz del árbol XML
-        root.append(nuevo_)
+        for val in value:
+            nuevo_ = ET.Element('nuevo')
+
+            for i, attribute_name in enumerate(attributes):
+                atributo = ET.SubElement(nuevo_, attribute_name)
+                atributo.text = str(val[i])
+
+            root.append(nuevo_)
 
         # Guardar los cambios en el archivo XML modificado
         tree.write(ruta_xml_modificado)
@@ -79,6 +90,3 @@ class Insert:
             print("El archivo modificado se ha guardado tanto en la ubicación original como en la carpeta 'Local'.")
         else:
             print("El archivo modificado se ha guardado únicamente en la carpeta 'Local'.")
-
-
-
