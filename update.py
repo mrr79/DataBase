@@ -15,9 +15,6 @@ class Update:
 
         ruta_xml_original=folder_path+"/"+file_name
 
-        print("FOLDER NAME:", folder_name)
-        print("FOLDER PATH:", folder_path)
-        print("FILE NAME:", file_name)
 
         tree = ET.parse(xml_file)
         root = tree.getroot()
@@ -51,7 +48,7 @@ class Update:
 
         answer = input("¿agregar WHERE? (Y/N): ")
         if answer.lower() == 'y':
-            where_conditions = input("WHERE")
+            where_conditions = input("WHERE ")
             conditions = self.parse_conditions(where_conditions)
             filtered_rows = self.filter_rows(rows, conditions)
         else:
@@ -62,11 +59,11 @@ class Update:
             values = [row.find(attribute) for attribute in columns]
             for value, text in zip(values, text_input):
                 value.text = text
-            print([value.text for value in values])
+            #print([value.text for value in values])
 
         tree.write(ruta_xml_modificado)
 
-        respuesta = input("¿Deseas guardar el archivo modificado en el archivo original? (Y/N): ")
+        respuesta = input("¿Hacer commit? (Y/N): ")
 
         if respuesta.upper() == "Y":
             # Copiar el archivo modificado a la ubicación del archivo original

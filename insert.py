@@ -78,7 +78,7 @@ class Insert:
         # Guardar los cambios en el archivo XML modificado
         tree.write(ruta_xml_modificado)
 
-        respuesta = input("¿Deseas guardar el archivo modificado en el archivo original? (Y/N): ")
+        respuesta = input("¿Hacer commit? (Y/N): ")
 
         if respuesta.upper() == "Y":
             # Copiar el archivo modificado a la ubicación del archivo original

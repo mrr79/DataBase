@@ -29,11 +29,11 @@ if __name__ == "__main__":
         insert_query = Insert(file_insert)
         insert_query.execute_query(file_insert)
     elif opcion == 3:
-        file_name = input(" DELETE FROM (sin la extensión .xml): ") + ".xml"
+        file_name = input(" DELETE FROM ") + ".xml"
         if verification.verify_file(file_name):
             delete_query.execute_query(file_name)
     elif opcion == 4:
-        file_name = input(" UPDATE ") + ".xml"
+        file_name = input("UPDATE ") + ".xml"
         if verification.verify_file(file_name):
             update_query.execute_query(file_name)
     elif opcion == 0:

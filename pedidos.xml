@@ -1,50 +1,50 @@
 <pedidos>
   <pedidos>
     <fecha>2023-06-01</fecha>
-    <id>millonarios</id>
-    <precio>10</precio>
+    <id>1</id>
+    <precio>milonario</precio>
     <cantidad>5</cantidad>
   </pedidos>
   <pedidos>
     <fecha>2023-06-02</fecha>
-    <id>millonarios</id>
-    <precio>15</precio>
+    <id>2</id>
+    <precio>milonario</precio>
     <cantidad>3</cantidad>
   </pedidos>
   <pedidos>
     <fecha>2023-06-03</fecha>
     <id>3</id>
-    <precio>20</precio>
+    <precio>milonario</precio>
     <cantidad>2</cantidad>
   </pedidos>
   <pedidos>
     <fecha>2023-06-01</fecha>
-    <id>millonarios</id>
-    <precio>12</precio>
+    <id>4</id>
+    <precio>milonario</precio>
     <cantidad>4</cantidad>
   </pedidos>
   <pedidos>
     <fecha>2023-06-04</fecha>
     <id>5</id>
-    <precio>8</precio>
+    <precio>milonario</precio>
     <cantidad>6</cantidad>
   </pedidos>
   <pedidos>
     <fecha>2023-06-05</fecha>
     <id>6</id>
-    <precio>25</precio>
+    <precio>milonario</precio>
     <cantidad>1</cantidad>
   </pedidos>
   <pedidos>
     <fecha>2023-06-06</fecha>
     <id>7</id>
-    <precio>18</precio>
+    <precio>milonario</precio>
     <cantidad>3</cantidad>
   </pedidos>
   <pedidos>
     <fecha>2023-06-07</fecha>
     <id>8</id>
-    <precio>14</precio>
+    <precio>milonario</precio>
     <cantidad>2</cantidad>
   </pedidos>
 </pedidos>

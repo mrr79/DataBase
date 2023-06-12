@@ -15,10 +15,6 @@ class Delete:
 
         ruta_xml_original=folder_path+"/"+file_name
 
-        print("FOLDER NAME:", folder_name)
-        print("FOLDER PATH:", folder_path)
-        print("FILE NAME:", file_name)
-
         tree = ET.parse(xml_file)
         root = tree.getroot()
 
@@ -45,7 +41,7 @@ class Delete:
         # Imprimir las filas seleccionadas
         answer = input("¿agregar WHERE? (Y/N): ")
         if answer.lower() == 'y':
-            where_conditions = input("Ingrese las condiciones WHERE separadas por comas (columna=valor): ")
+            where_conditions = input("WHERE ")
             conditions = self.parse_conditions(where_conditions)
             filtered_rows = self.filter_rows(rows, conditions)
         else:
@@ -56,8 +52,8 @@ class Delete:
             root.remove(row)
 
         tree.write(ruta_xml_modificado)
-
-        respuesta = input("¿Deseas guardar el archivo modificado en el archivo original? (Y/N): ")
+        #               AQUI YA SE BORRO, ENTONCES AQUI VA LA SENAL PARA EL ARDUINO. 
+        respuesta = input("¿Hacer commit? (Y/N): ")
 
         if respuesta.upper() == "Y":
             # Copiar el archivo modificado a la ubicación del archivo original
