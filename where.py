@@ -3,10 +3,27 @@ import xml.etree.ElementTree as ET
 import re
 from join import Join
 class Select:
+    """
+    Clase que ejecuta consultas SELECT en archivos XML, seleccionar columnas, aplicar condiciones WHERE y realizar JOINs con otros archivos XML.
+    """
     def __init__(self, folder_path):
+        """
+        Inicializa una instancia de la clase Select.
+
+        :param folder_path: Ruta de la carpeta donde se encuentran los archivos XML.
+        :type folder_path: str
+        """
         self.folder_path = folder_path
 
     def execute_query(self, file_name, columns=None):
+        """
+        Ejecuta una consulta SELECT en un archivo XML.
+
+        :param file_name: Nombre del archivo XML.
+        :type file_name: str
+        :param columns: Lista de nombres de columnas a seleccionar, por defecto None (selecciona todas las columnas).
+        :type columns: list, optional
+        """
         folder_name = file_name.split('.')[0]
         folder_path = os.path.join(self.folder_path, folder_name)
         xml_file = os.path.join(folder_path, file_name)
@@ -60,23 +77,26 @@ class Select:
             join_rows = join_root.findall('.//' + join_folder_name)
 
             join_objeto = Join()
-            # Realizar el JOIN aquí
-            #join_objeto.imprimir_valores(filtered_rows)
-            #print("JOIN realizado")
-            #filtered rows son las que ya cumplieron las condiciones del WHERE
             join_filtered_rows = join_objeto.perform_join(folder_name,filtered_rows)
-            #print("Filas seleccionadas:")
+
             for row in join_filtered_rows:
                 #imprimo las que cumplieron con lo del JOIN
                 values = [row.find(attribute).text for attribute in columns]
                 print(values)
         else:
-            #print("Filas seleccionadas:")
             for row in filtered_rows:
                 values = [row.find(attribute).text for attribute in columns]
                 print(values)
 
     def parse_conditions(self, where_conditions):
+        """
+        Analiza las condiciones WHERE de la consulta y las separa en grupos.
+
+        :param where_conditions: Condiciones WHERE de la consulta.
+        :type where_conditions: str
+        :return: Lista de condiciones separadas en grupos.
+        :rtype: list
+        """
         conditions = []
         condition_groups = re.split(r'\bOR\b', where_conditions)  # Separar las condiciones por "OR"
         for group in condition_groups:
@@ -85,6 +105,16 @@ class Select:
         return conditions
 
     def filter_rows(self, rows, conditions):
+        """
+        Filtra las filas según las condiciones especificadas.
+
+        :param rows: Filas a filtrar.
+        :type rows: list
+        :param conditions: Condiciones de filtrado.
+        :type conditions: list
+        :return: Filas filtradas.
+        :rtype: list
+        """
         filtered_rows = []
         for row in rows:
             match = False

@@ -3,6 +3,14 @@ from huffman import encode_string
 encoded_string = encode_string(string, encoding)
 
 def morse_to_text(codigo_morse):
+    """
+    Convierte un código Morse en texto.
+
+    :param codigo_morse: Código Morse a traducir.
+    :type codigo_morse: str
+    :return: Texto traducido.
+    :rtype: str
+    """
     codigo_morse = codigo_morse.strip()
     morse_a_texto = {
         '.-': 'a', '-...': 'b', '-.-.': 'c', '-..': 'd', '.': 'e',

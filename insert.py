@@ -6,11 +6,28 @@ import ast
 
 
 class Insert:
+    """
+    Clase que representa una operación de inserción en una base de datos XML.
+    """
+
     def __init__(self, folder_path):
+        """
+        Inicializa la clase de inserción.
+
+        :param folder_path: Ruta de la carpeta de la base de datos.
+        :type folder_path: str
+        """
         self.folder_path = folder_path
 
     def execute_query(self, input_insert):
-        #print("Estoy en insert AAAAAAAAAAAAAAAAA")
+        """
+        Ejecuta una consulta de inserción en la base de datos.
+
+        :param input_insert: Consulta de inserción en formato "INSERT INTO table_name (attribute1, attribute2, ...) VALUES (value1, value2, ...);"
+        :type input_insert: str
+        :return: Información sobre la inserción realizada.
+        :rtype: tuple
+        """
 
         # Define the regular expression pattern to extract the file name and attributes
         pattern = r'(\w+)\s*\((.+)\)'
@@ -52,6 +69,20 @@ class Insert:
 
     @staticmethod
     def insert_xml(file_name, ruta_xml_original, attributes_str, values_list, ruta_local=None):
+        """
+        Inserta valores en un archivo XML.
+
+        :param file_name: Nombre del archivo.
+        :type file_name: str
+        :param ruta_xml_original: Ruta del archivo XML original.
+        :type ruta_xml_original: str
+        :param attributes_str: Cadena de atributos separados por comas.
+        :type attributes_str: str
+        :param values_list: Lista de tuplas con los valores a insertar.
+        :type values_list: list
+        :param ruta_local: Ruta de la carpeta local.
+        :type ruta_local: str, optional
+        """
         #print("                             estoy en UPDATE DENTRO  ")
         ruta_local = '/home/mrr/Desktop/DataBase/local'
         ruta_auxiliar = os.path.join(ruta_local, file_name)

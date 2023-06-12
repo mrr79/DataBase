@@ -5,7 +5,17 @@ import shutil
 import ast
 
 class Create:
-    def create(self,input_str):
+    """
+    Clase que permite crear una carpeta con un archivo XML dentro.
+    """
+
+    def create(self, input_str):
+        """
+        Crea una carpeta con un archivo XML dentro.
+
+        :param input_str: Cadena de entrada que especifica el nombre y atributos.
+        :type input_str: str
+        """
         # Dividir el input en nombre y atributos
         partes = input_str.split(" (")
         nombre = partes[0]

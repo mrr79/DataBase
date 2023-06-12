@@ -5,10 +5,30 @@ import shutil
 import ast
 
 class Delete:
-    def __init__(self, folder_path,):
+    """
+    Clase que permite borrar filas de un archivo XML.
+    """
+
+    def __init__(self, folder_path):
+        """
+        Inicializa la clase `Delete`.
+
+        :param folder_path: Ruta de la carpeta que contiene el archivo XML.
+        :type folder_path: str
+        """
         self.folder_path = folder_path
 
     def execute_query(self, file_name, columns=None, contador=0):
+        """
+        Ejecuta una consulta para borrar filas en el archivo XML.
+
+        :param file_name: Nombre del archivo XML.
+        :type file_name: str
+        :param columns: Lista de nombres de columnas a considerar, por defecto None.
+        :type columns: list, optional
+        :param contador: Contador para llevar la cuenta de las filas borradas, por defecto 0.
+        :type contador: int, optional
+        """
         folder_name = file_name.split('.')[0]
         folder_path = os.path.join(self.folder_path, folder_name)
         xml_file = os.path.join(folder_path, file_name)
@@ -70,6 +90,14 @@ class Delete:
         
 
     def parse_conditions(self, where_conditions):
+        """
+        Analiza las condiciones de la cláusula WHERE.
+
+        :param where_conditions: Condiciones especificadas en la cláusula WHERE.
+        :type where_conditions: str
+        :return: Condiciones analizadas.
+        :rtype: list
+        """
         conditions = []
         condition_groups = re.split(r'\bOR\b', where_conditions)  # Separar las condiciones por "OR"
         for group in condition_groups:
@@ -78,6 +106,16 @@ class Delete:
         return conditions
 
     def filter_rows(self, rows, conditions):
+        """
+        Filtra las filas según las condiciones especificadas.
+
+        :param rows: Filas a filtrar.
+        :type rows: list
+        :param conditions: Condiciones de filtrado.
+        :type conditions: list
+        :return: Filas filtradas.
+        :rtype: list
+        """
         filtered_rows = []
         for row in rows:
             match = False

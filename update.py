@@ -5,10 +5,27 @@ import shutil
 import ast
 
 class Update:
+    """
+    Clase que representa una operación de actualizacion/modificacion en una base de datos XML.
+    """
     def __init__(self, folder_path):
+        """
+        Inicializa una instancia de la clase Update.
+
+        :param folder_path: Ruta de la carpeta donde se encuentran los archivos XML.
+        :type folder_path: str
+        """
         self.folder_path = folder_path
 
     def execute_query(self, file_name, columns=None):
+        """
+        Ejecuta una consulta de actualización en un archivo XML.
+
+        :param file_name: Nombre del archivo XML.
+        :type file_name: str
+        :param columns: Columnas a actualizar.
+        :type columns: list[str] or None
+        """
         folder_name = file_name.split('.')[0]
         folder_path = os.path.join(self.folder_path, folder_name)
         xml_file = os.path.join(folder_path, file_name)
@@ -74,6 +91,14 @@ class Update:
 
 
     def parse_conditions(self, where_conditions):
+        """
+        Parsea las condiciones de la cláusula WHERE.
+
+        :param where_conditions: Condiciones de la cláusula WHERE.
+        :type where_conditions: str
+        :return: Condiciones parseadas.
+        :rtype: list[list[str]]
+        """
         conditions = []
         condition_groups = re.split(r'\bOR\b', where_conditions)  # Separar las condiciones por "OR"
         for group in condition_groups:
@@ -82,6 +107,16 @@ class Update:
         return conditions
 
     def filter_rows(self, rows, conditions):
+        """
+        Filtra las filas de acuerdo a las condiciones especificadas.
+
+        :param rows: Filas a filtrar.
+        :type rows: list[xml.etree.ElementTree.Element]
+        :param conditions: Condiciones de filtrado.
+        :type conditions: list[list[str]]
+        :return: Filas filtradas.
+        :rtype: list[xml.etree.ElementTree.Element]
+        """
         filtered_rows = []
         for row in rows:
             match = False
