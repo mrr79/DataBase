@@ -1,7 +1,0 @@
-<carros>
-	<carros>
-		<id />
-		<marca />
-		<precio />
-	</carros>
-<nuevo><id>JUAN</id><marca>2</marca><precio>100</precio></nuevo><nuevo><id>alina</id><marca>22</marca><precio>200</precio></nuevo><nuevo><id>norma</id><marca>21</marca><precio>500</precio></nuevo></carros>

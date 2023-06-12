@@ -25,7 +25,7 @@ if __name__ == "__main__":
         if verification.verify_file(file_name):
             query.execute_query(file_name)
     elif opcion == 2:
-        file_insert= input("INSERT INTO: ")
+        file_insert= input("INSERT INTO ")
         insert_query = Insert(file_insert)
         insert_query.execute_query(file_insert)
     elif opcion == 3:

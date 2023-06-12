@@ -39,14 +39,13 @@ class Insert:
 
             print("File insert rows:", file_rows)
 
-            values_input = ast.literal_eval(input("Ingrese los valores en el formato '(Producto 1, 10.99), (Producto 2, 15.99), ...': "))
-            #values_input = values_input.replace('(', '').replace(')', '')  # Eliminar paréntesis
-            #values_list = [tuple(value.strip().split(',')) for value in values_input.split(',')]
-            #values_list= "["+values_input+"]"
-            values_list = list(values_input)
-            print("SUPUESTA PERRA LISTA DE FKN TUPLAS")
-            print (values_list)
-            self.insert_xml(file_name, xml_file, attributes_str,values_list)
+            values_input = input("Ingrese los valores en el formato '(Producto 1, 10.99), (Producto 2, 15.99), ...': ")
+            values_input = values_input.strip(';')
+            values_list = [tuple(value.strip().strip('()').split(',')) for value in values_input.split('),(')]
+            print("Lista de tuplas:")
+            print(values_list)
+
+            self.insert_xml(file_name, xml_file, attributes_str, values_list)
             return file_name, attributes_str, xml_file, attributes_str
 
         else:
@@ -54,7 +53,7 @@ class Insert:
             return None
 
     @staticmethod
-    def insert_xml(file_name, ruta_xml_original, attributes_str,value, ruta_local=None):
+    def insert_xml(file_name, ruta_xml_original, attributes_str, values_list, ruta_local=None):
         print("                             estoy en UPDATE DENTRO  ")
         ruta_local = '/home/mrr/Desktop/DataBase/local'
         ruta_auxiliar = os.path.join(ruta_local, file_name)
@@ -67,19 +66,12 @@ class Insert:
         tree = ET.parse(ruta_xml_modificado)
         root = tree.getroot()
 
-        nuevo_ = ET.Element(file_name)
+        for value in values_list:
+            nuevo_ = ET.Element(file_name)
 
-        attributes = attributes_str.split(',')  # Dividir los valores de atributos por coma
-
-        print("SSSSSSSSSSSSSUPUESTA PERRA LISTA DE FKN TUPLAS ABAJJO")
-        print(value)
-
-        for val in value:
-            nuevo_ = ET.Element('nuevo')
-
-            for i, attribute_name in enumerate(attributes):
+            for i, attribute_name in enumerate(attributes_str.split(',')):
                 atributo = ET.SubElement(nuevo_, attribute_name)
-                atributo.text = str(val[i])
+                atributo.text = str(value[i])
 
             root.append(nuevo_)
 

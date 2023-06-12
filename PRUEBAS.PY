@@ -4,7 +4,7 @@ def create(input_str):
     # Dividir el input en nombre y atributos
     partes = input_str.split(" (")
     nombre = partes[0]
-    atributos = partes[1][:-1].split(",")
+    atributos = partes[1][:-2].split(",")  # Remover el punto y coma final
     
     # Crear la carpeta con el nombre especificado
     os.makedirs(nombre, exist_ok=True)
@@ -21,9 +21,8 @@ def create(input_str):
     archivo = open(f"{nombre}/{nombre}.xml", "w")
     archivo.write(contenido)
     archivo.close()
-    
+
 # Ejemplo de uso
 input_str = input("CREATE TABLE ")
-
 create(input_str)
 print("Carpeta y archivo XML creados exitosamente.")

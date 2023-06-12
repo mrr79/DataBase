@@ -9,7 +9,7 @@ class Create:
         # Dividir el input en nombre y atributos
         partes = input_str.split(" (")
         nombre = partes[0]
-        atributos = partes[1][:-1].split(",")
+        atributos = partes[1][:-2].split(",")  # Remover el punto y coma final
         
         # Crear la carpeta con el nombre especificado
         os.makedirs(nombre, exist_ok=True)
