@@ -33,6 +33,8 @@ class Select:
                 columns = [child.tag for child in rows[0]]
             else:
                 columns = [column.strip() for column in columns_input.split(',')] if columns_input else [child.tag for child in rows[0]]
+                print("----------------------------------------------")
+                print(columns_input)
 
         # Imprimir las filas seleccionadas
         answer = input("¿agregar WHERE? (Y/N): ")
