@@ -32,14 +32,14 @@ class Update:
 
         # Obtener los nombres de los atributos
         if columns is None:
-            where_input = input("Ingrese los nombres de los atributos con el valor que quiere ponerles ahora: ")
-            columns_input= #necesito que sea el  atributo
-            text_input=#necesito que sea el valor que esta despues del =
-            if columns_input.strip() == "*":
+            where_input = input("SET ")
+            attribute_value_pairs = [pair.strip() for pair in where_input.split(',')]
+            columns_input = [pair.split('=')[0].strip() for pair in attribute_value_pairs]
+            text_input = [pair.split('=')[1].strip() for pair in attribute_value_pairs]
+            if columns_input == ["*"]:
                 columns = [child.tag for child in rows[0]]
             else:
-                columns = [column.strip() for column in columns_input.split(',')] if columns_input else [child.tag for child in rows[0]]
-
+                columns = [column.strip() for column in columns_input] if columns_input else [child.tag for child in rows[0]]
 
         ruta_local = '/home/mrr/Desktop/DataBase/local'
         ruta_auxiliar = os.path.join(ruta_local, folder_name)
@@ -49,11 +49,9 @@ class Update:
         ruta_xml_modificado = os.path.join(ruta_auxiliar, file_name)
         shutil.copyfile(ruta_xml_original, ruta_xml_modificado)
 
-
-       
         answer = input("¿agregar WHERE? (Y/N): ")
         if answer.lower() == 'y':
-            where_conditions = input("Ingrese las condiciones WHERE separadas por comas (columna=valor): ")
+            where_conditions = input("WHERE")
             conditions = self.parse_conditions(where_conditions)
             filtered_rows = self.filter_rows(rows, conditions)
         else:
@@ -62,10 +60,9 @@ class Update:
         # Imprimir las filas seleccionadas
         for row in filtered_rows:
             values = [row.find(attribute) for attribute in columns]
-            for value in values:
-                value.text = text_input
+            for value, text in zip(values, text_input):
+                value.text = text
             print([value.text for value in values])
-
 
         tree.write(ruta_xml_modificado)
 
@@ -77,6 +74,7 @@ class Update:
             print("El archivo modificado se ha guardado tanto en la ubicación original como en la carpeta 'Local'.")
         else:
             print("El archivo modificado se ha guardado únicamente en la carpeta 'Local'.")
+
 
     def parse_conditions(self, where_conditions):
         conditions = []
