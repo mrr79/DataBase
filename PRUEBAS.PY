@@ -1,6 +1,11 @@
 import os
 
-def crear_carpeta_y_archivo(nombre, atributos):
+def create(input_str):
+    # Dividir el input en nombre y atributos
+    partes = input_str.split(" (")
+    nombre = partes[0]
+    atributos = partes[1][:-1].split(",")
+    
     # Crear la carpeta con el nombre especificado
     os.makedirs(nombre, exist_ok=True)
     
@@ -18,8 +23,7 @@ def crear_carpeta_y_archivo(nombre, atributos):
     archivo.close()
     
 # Ejemplo de uso
-nombre = input("Ingrese el nombre: ")
-atributos = input("Ingrese los atributos separados por comas: ").split(",")
+input_str = input("CREATE TABLE ")
 
-crear_carpeta_y_archivo(nombre, atributos)
+create(input_str)
 print("Carpeta y archivo XML creados exitosamente.")
