@@ -1,6 +1,4 @@
 from collections import Counter
-
-
 class NodeTree(object):
     def __init__(self, left=None, right=None):
         self.left = left
@@ -27,11 +25,6 @@ def huffman_code_tree(node, binString=''):
 
 
 def make_tree(nodes):
-    '''
-    Function to make tree
-    :param nodes: Nodes
-    :return: Root of the tree
-    '''
     while len(nodes) > 1:
         (key1, c1) = nodes[-1]
         (key2, c2) = nodes[-2]

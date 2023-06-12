@@ -10,7 +10,7 @@ class Insert:
         self.folder_path = folder_path
 
     def execute_query(self, input_insert):
-        print("Estoy en insert AAAAAAAAAAAAAAAAA")
+        #print("Estoy en insert AAAAAAAAAAAAAAAAA")
 
         # Define the regular expression pattern to extract the file name and attributes
         pattern = r'(\w+)\s*\((.+)\)'
@@ -25,9 +25,7 @@ class Insert:
             attributes = [attr.strip() for attr in attributes]
 
             attributes_str = ','.join(attributes)
-            print(file_name)
-            print(attributes)
-            print("attributes string:", attributes_str)
+          
 
             # Construct the file path
             folder_name = re.sub(r'\W+', '', file_name)
@@ -37,13 +35,13 @@ class Insert:
             file_root = file_tree.getroot()
             file_rows = file_root.findall('.//' + file_name)
 
-            print("File insert rows:", file_rows)
+            #print("INSERT INTO ", file_rows)
 
-            values_input = input("Ingrese los valores en el formato '(Producto 1, 10.99), (Producto 2, 15.99), ...': ")
+            values_input = input("VALUES ")
             values_input = values_input.strip(';')
             values_list = [tuple(value.strip().strip('()').split(',')) for value in values_input.split('),(')]
-            print("Lista de tuplas:")
-            print(values_list)
+            #print("Lista de tuplas:")
+            #print(values_list)
 
             self.insert_xml(file_name, xml_file, attributes_str, values_list)
             return file_name, attributes_str, xml_file, attributes_str
@@ -54,7 +52,7 @@ class Insert:
 
     @staticmethod
     def insert_xml(file_name, ruta_xml_original, attributes_str, values_list, ruta_local=None):
-        print("                             estoy en UPDATE DENTRO  ")
+        #print("                             estoy en UPDATE DENTRO  ")
         ruta_local = '/home/mrr/Desktop/DataBase/local'
         ruta_auxiliar = os.path.join(ruta_local, file_name)
         if not os.path.exists(ruta_auxiliar):
