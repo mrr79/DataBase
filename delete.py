@@ -5,10 +5,10 @@ import shutil
 import ast
 
 class Delete:
-    def __init__(self, folder_path):
+    def __init__(self, folder_path,):
         self.folder_path = folder_path
 
-    def execute_query(self, file_name, columns=None):
+    def execute_query(self, file_name, columns=None, contador=0):
         folder_name = file_name.split('.')[0]
         folder_path = os.path.join(self.folder_path, folder_name)
         xml_file = os.path.join(folder_path, file_name)
@@ -50,6 +50,12 @@ class Delete:
         # borarr las filas seleccionadas
         for row in filtered_rows:
             root.remove(row)
+            contador = contador+1
+
+        if contador == 1:
+            print("gruapa borrraste 1")
+        elif contador > 1:
+            print("fea borraste muchos")
 
         tree.write(ruta_xml_modificado)
         #               AQUI YA SE BORRO, ENTONCES AQUI VA LA SENAL PARA EL ARDUINO. 
