@@ -21,7 +21,7 @@ if __name__ == "__main__":
     opcion = int(input("¿Qué acción deseas realizar? (0: CREATE, 1: SELECT/JOIN, 2: INSERT, 3: DELETE, 4: UPDATE): "))
 
     if opcion == 1:
-        file_name = input("FROM (sin la extensión .xml): ") + ".xml"
+        file_name = input("FROM ") + ".xml"
         if verification.verify_file(file_name):
             query.execute_query(file_name)
     elif opcion == 2:

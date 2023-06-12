@@ -4,10 +4,10 @@ import re
 
 class Join:
 
-    def imprimir_valores(self, filtered_rows):
-        print("                        ESTO ESTA EN JOIN")
+    """def imprimir_valores(self, filtered_rows):
+        #print("                        ESTO ESTA EN JOIN")
         for row in filtered_rows:
-            print(row)
+            #print(row)"""
 
     def join_files(self, file1, file2):
         
@@ -28,7 +28,7 @@ class Join:
         return folder1_path, folder2_path, file1_rows, file2_rows
 
     def perform_join(self, filtered_folder, filtered_rows):
-        attributes = input("Ingrese la comparación en el formato 'archivo1.atributo1=archivo2.atributo2': ")
+        attributes = input("ON ")
         attribute1, attribute2 = attributes.split('=')
         file1, attr1 = attribute1.split('.')
         file2, attr2 = attribute2.split('.')
@@ -57,7 +57,7 @@ class Join:
         print("#######################################################################################################")'''
 
         if filtered_folder==file1:
-            print("ESTE ARRIBA")
+            #print("ESTE ARRIBA")
             join_rows = []
             for row1 in filtered_rows:
                 for row2 in file2_rows:
@@ -67,7 +67,7 @@ class Join:
             return join_rows
         
         elif filtered_folder==file2:
-            print("ESTE ABAjo")
+            #print("ESTE ABAjo")
             join_rows = []
             for row1 in filtered_rows:
                 for row2 in file1_rows:

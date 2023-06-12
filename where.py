@@ -11,9 +11,6 @@ class Select:
         folder_path = os.path.join(self.folder_path, folder_name)
         xml_file = os.path.join(folder_path, file_name)
 
-        print("FOLDER NAME:", folder_name)
-        print("FOLDER PATH:", folder_path)
-        print("FILE NAME:", file_name)
 
         tree = ET.parse(xml_file)
         root = tree.getroot()
@@ -28,32 +25,29 @@ class Select:
 
         # Obtener los nombres de los atributos
         if columns is None:
-            columns_input = input("Ingrese los nombres de los atributos separados por comas (* para seleccionar todos): ")
+            columns_input = input("SELECT ")
             if columns_input.strip() == "*":
                 columns = [child.tag for child in rows[0]]
             else:
                 columns = [column.strip() for column in columns_input.split(',')] if columns_input else [child.tag for child in rows[0]]
-                print("----------------------------------------------")
-                print(columns_input)
+                #print("----------------------------------------------")
+                #print(columns_input)
 
         # Imprimir las filas seleccionadas
         answer = input("¿agregar WHERE? (Y/N): ")
         if answer.lower() == 'y':
-            where_conditions = input("Ingrese las condiciones WHERE separadas por comas (columna=valor): ")
+            where_conditions = input("WHERE ")
             conditions = self.parse_conditions(where_conditions)
             filtered_rows = self.filter_rows(rows, conditions)
         else:
             filtered_rows = rows
 
-        # Imprimir las filas seleccionadas
-        """for row in filtered_rows:
-            values = [row.find(attribute).text for attribute in columns]
-            print(values)"""
+        
         
 
         answer_join = input("¿hacer JOIN (Y/N)? ")
         if answer_join.lower() == 'y':
-            print("Mariana has el join")
+            #print("Mariana has el join")
 
             join_file = input("JOIN ")
             join_folder_name = join_file
@@ -67,17 +61,17 @@ class Select:
 
             join_objeto = Join()
             # Realizar el JOIN aquí
-            join_objeto.imprimir_valores(filtered_rows)
-            print("JOIN realizado")
+            #join_objeto.imprimir_valores(filtered_rows)
+            #print("JOIN realizado")
             #filtered rows son las que ya cumplieron las condiciones del WHERE
             join_filtered_rows = join_objeto.perform_join(folder_name,filtered_rows)
-            print("Filas seleccionadas:")
+            #print("Filas seleccionadas:")
             for row in join_filtered_rows:
                 #imprimo las que cumplieron con lo del JOIN
                 values = [row.find(attribute).text for attribute in columns]
                 print(values)
         else:
-            print("Filas seleccionadas:")
+            #print("Filas seleccionadas:")
             for row in filtered_rows:
                 values = [row.find(attribute).text for attribute in columns]
                 print(values)

@@ -19,6 +19,6 @@ class Verification:
             print(f"No se encontró el archivo {file_name} en la carpeta {folder_name}.")
             return False
 
-        print ("si esta la carpeta")
+        #print ("si esta la carpeta")
         return True
         
