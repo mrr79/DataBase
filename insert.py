@@ -2,6 +2,8 @@ import os
 import xml.etree.ElementTree as ET
 import re
 import shutil
+import ast
+
 
 class Insert:
     def __init__(self, folder_path):
@@ -37,11 +39,14 @@ class Insert:
 
             print("File insert rows:", file_rows)
 
-            #values = input("VALUES: ")
-            
-            #print("estos son los values", self.value)
-
-            self.update_xml(file_name, xml_file, attributes_str)
+            values_input = ast.literal_eval(input("Ingrese los valores en el formato '(Producto 1, 10.99), (Producto 2, 15.99), ...': "))
+            #values_input = values_input.replace('(', '').replace(')', '')  # Eliminar paréntesis
+            #values_list = [tuple(value.strip().split(',')) for value in values_input.split(',')]
+            #values_list= "["+values_input+"]"
+            values_list = list(values_input)
+            print("SUPUESTA PERRA LISTA DE FKN TUPLAS")
+            print (values_list)
+            self.insert_xml(file_name, xml_file, attributes_str,values_list)
             return file_name, attributes_str, xml_file, attributes_str
 
         else:
@@ -49,7 +54,7 @@ class Insert:
             return None
 
     @staticmethod
-    def update_xml(file_name, ruta_xml_original, attributes_str, ruta_local=None,value=None):
+    def insert_xml(file_name, ruta_xml_original, attributes_str,value, ruta_local=None):
         print("                             estoy en UPDATE DENTRO  ")
         ruta_local = '/home/mrr/Desktop/DataBase/local'
         ruta_auxiliar = os.path.join(ruta_local, file_name)
@@ -66,9 +71,8 @@ class Insert:
 
         attributes = attributes_str.split(',')  # Dividir los valores de atributos por coma
 
-        value = [('Producto 1', 10.99),
-                 ('Producto 2', 15.99),
-                 ('Producto 3', 20.99)]
+        print("SSSSSSSSSSSSSUPUESTA PERRA LISTA DE FKN TUPLAS ABAJJO")
+        print(value)
 
         for val in value:
             nuevo_ = ET.Element('nuevo')
