@@ -49,12 +49,12 @@ class Join:
 
         #print(xml_file1)
         #print(xml_file2)
-        print("Esta es la carpeta que tenía el select:", filtered_folder) #imprime propietarios
+        '''print("Esta es la carpeta que tenía el select:", filtered_folder) #imprime propietarios
         print("Estos son los que están filtrados que tenía el select:", filtered_rows)
         print("#######################################################################################################")
         print("fle 2 rows:", file2_rows)
         print("fle 1 rows:", file1_rows)
-        print("#######################################################################################################")
+        print("#######################################################################################################")'''
 
         if filtered_folder==file1:
             print("ESTE ARRIBA")

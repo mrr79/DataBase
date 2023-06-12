@@ -1,5 +1,12 @@
-en join pt4: sin condiciones dentro del jin o sea no se puede hacer join on AND otra cosa tampoco hacer jooin con dos files al mismo tiempo.
+*********** receta para llegar a una carpeta con el xml y leerlo.
+***********
+    def execute_query(self, file_name):
+        print("estoy en insert AAAAAAAAAAAAAAAAA")
 
-JOIN Pt5
-solo compara que carnet por ej, en los dos files, sea el mismo. El usuario digita cual quiere que sea la misma en las dos carpetas, pero ambas tienen que tener el mismo nombre.
+        xml_file = os.path.join(self.folder_path, file_name +".xml")
 
+        file_tree = ET.parse(xml_file)
+        file_root = file_tree.getroot()
+        file_rows = file_root.findall('.//' + file_name)
+
+        print("file inseert rows:", file_rows)
