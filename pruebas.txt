@@ -10,3 +10,4 @@
         file_rows = file_root.findall('.//' + file_name)
 
 ************************* JOIN PARTE 4: HACE CAMBIO LOCAL, COMMIT. FALTA DEL IMPUT DE LOS DATOS EN LAS CELDAS.
+************************ JOIN PARTE 4: HACE CAMBIO LOCAL, COMMIT. FALTA DEL IMPUT DE LOS DATOS EN LAS CELDAS PERO YA HACE VARIOS OBJETOS EN UNA MISMA LINEA.
