@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Iniciar sesión</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        .input {
+            margin: 10px;
+            padding: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Iniciar sesión</h1>
+        {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+        {% endif %}
+        <form method="POST">
+            <input type="text" name="username" class="input" placeholder="Usuario" required>
+            <input type="password" name="password" class="input" placeholder="Contraseña" required>
+            <input type="submit" value="Iniciar sesión" class="button">
+        </form>
+    </div>
+</body>
+</html>

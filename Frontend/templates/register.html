@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registrarse</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        .input {
+            margin: 10px;
+            padding: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if success_message %}
+        <h1>{{ success_message }}</h1>
+        <a href="/" class="button">Volver</a>
+        {% else %}
+        <h1>Registro</h1>
+        <form method="POST">
+            <input type="email" name="email" class="input" placeholder="Correo electrónico" required>
+            <input type="text" name="username" class="input" placeholder="Usuario" required>
+            <input type="password" name="password" class="input" placeholder="Contraseña" required>
+            <input type="submit" value="Registrarse" class="button">
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>

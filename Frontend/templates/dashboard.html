@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/python/python.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-grow: 1;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 10px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .button {
+            padding: 5px;
+            font-size: 14px;
+        }
+        .editor {
+            height: 300px;
+        }
+        #output {
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 30%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-right: 1px solid #ccc;
+        }
+        .folder {
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .folder:hover {
+            background-color: #e0e0e0;
+        }
+        .attributes {
+            display: none;
+            padding-left: 10px;
+        }
+        .attributes p {
+            margin: 0;
+        }
+        .button-return {
+            background-color: #ccc;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Dashboard</h1>
+        <div class="button-group">
+            <button id="create-folder-button" class="button">Crear carpeta</button>
+            <form method="POST" action="/ejecutar_script" id="execute-form">
+                <input type="submit" name="button" value="Ejecutar script" id="execute-button" class="button">
+            </form>
+        <form method="POST" action="/commit">
+            <input type="submit" name="button" value="Hacer commit" class="button">
+        </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Carpetas</h3>
+            <div id="folder-list"></div>
+        </div>
+        <div class="content">
+            <textarea id="code-editor" class="editor"></textarea>
+            <div id="output"></div>
+            {% if content %}
+            <p>{{ content }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div id="create-folder-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Crear carpeta</h2>
+            <form id="create-folder-form" method="POST">
+                <label for="folder-name">Nombre:</label>
+                <input type="text" id="folder-name" name="folder-name" required>
+                <div id="attribute-list">
+                    <label>Atributos:</label>
+                </div>
+                <button type="button" id="add-attribute-button">Agregar atributo</button>
+                <input type="submit" value="Crear">
+            </form>
+        </div>
+    </div>
+    <script>
+        var createFolderButton = document.getElementById("create-folder-button");
+        var createFolderModal = document.getElementById("create-folder-modal");
+        var closeButton = document.getElementsByClassName("close")[0];
+        var createFolderForm = document.getElementById("create-folder-form");
+        var folderListElement = document.getElementById("folder-list");
+        var attributeListElement = document.getElementById("attribute-list");
+        var addAttributeButton = document.getElementById("add-attribute-button");
+        var folders = [];
+
+                // Agrega las carpetas precargadas
+        var preloadedFolders = JSON.parse('{{ preloaded_folders|tojson|safe }}');
+
+        // Agrega las carpetas precargadas a la lista de carpetas
+        folders = folders.concat(preloadedFolders);
+        updateFolderList();
+        createFolderButton.addEventListener("click", function() {
+            createFolderModal.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", function() {
+            createFolderModal.style.display = "none";
+        });
+
+        createFolderForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            createFolder();
+        });
+
+        addAttributeButton.addEventListener("click", function() {
+            addAttributeInput();
+        });
+
+        function createFolder() {
+            var folderName = document.getElementById("folder-name").value;
+            var attributeInputs = attributeListElement.getElementsByTagName("input");
+            var folderAttributes = [];
+
+            for (var i = 0; i < attributeInputs.length; i++) {
+                var attributeValue = attributeInputs[i].value;
+                if (attributeValue.trim() !== "") {
+                    folderAttributes.push(attributeValue);
+                }
+            }
+
+            var folder = {
+                name: folderName,
+                attributes: folderAttributes
+            };
+
+            // Send folder data to the server
+            fetch("/create_folder", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(folder)
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error("Error creating folder: " + response.status);
+                }
+            })
+            .then(function(responseText) {
+                console.log(responseText);
+                folders.push(folder);
+                updateFolderList();
+                createFolderModal.style.display = "none";
+                createFolderForm.reset();
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+        }
+
+        function addAttributeInput() {
+            var attributeInput = document.createElement("input");
+            attributeInput.type = "text";
+            attributeInput.placeholder = "Atributo";
+            attributeListElement.appendChild(attributeInput);
+        }
+
+        function updateFolderList() {
+            folderListElement.innerHTML = "";
+
+            folders.forEach(function(folder) {
+                var folderElement = document.createElement("div");
+                folderElement.classList.add("folder");
+                folderElement.textContent = folder.name;
+
+                folderElement.addEventListener("dblclick", function() {
+                    var attributesElement = folderElement.querySelector(".attributes");
+                    if (attributesElement.style.display === "none") {
+                        attributesElement.style.display = "block";
+                    } else {
+                        attributesElement.style.display = "none";
+                    }
+                });
+
+                var attributesElement = document.createElement("div");
+                attributesElement.classList.add("attributes");
+                folder.attributes.forEach(function(attribute) {
+                    var attributeParagraph = document.createElement("p");
+                    attributeParagraph.textContent = attribute;
+                    attributesElement.appendChild(attributeParagraph);
+                });
+
+                folderElement.appendChild(attributesElement);
+                folderListElement.appendChild(folderElement);
+            });
+        }
+
+        var editor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
+            mode: "python",
+            theme: "default",
+            lineNumbers: true
+        });
+
+        document.getElementById("execute-button").addEventListener("click", function(event) {
+            event.preventDefault();
+
+            var code = editor.getValue();
+            var outputElement = document.getElementById("output");
+
+            // Enviar el código del script al servidor para su ejecución
+            fetch("/execute_script", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "code=" + encodeURIComponent(code)
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error("Error executing script: " + response.status);
+                }
+            })
+            .then(function(responseText) {
+                outputElement.textContent = responseText;
+            })
+            .catch(function(error) {
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>
