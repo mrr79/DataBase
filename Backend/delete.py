@@ -3,6 +3,10 @@ import xml.etree.ElementTree as ET
 import re
 import shutil
 import ast
+import time
+
+import serial
+
 
 class Delete:
     """
@@ -84,6 +88,10 @@ class Delete:
         if contador == 1:
             print("DELETE hecho en 1 instancia")
         elif contador > 1:
+            arduino = serial.Serial('COM4', 9600)  # Reemplaza 'COM3' con tu puerto serie y 9600 con la velocidad de baudios correcta
+            time.sleep(2)
+            arduino.write(b'3')
+            arduino.close()
             print("DELETE hecho en varias instancias")
 
         tree.write(ruta_xml_modificado)

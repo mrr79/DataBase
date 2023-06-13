@@ -1,3 +1,5 @@
+import time
+
 from Backend.verification import Verification
 from Backend.where import Select
 from Backend.insert import Insert
@@ -12,6 +14,11 @@ import string
 import re
 import serial
 from collections import Counter
+import serial.tools.list_ports
+
+ports = serial.tools.list_ports.comports()
+for port in ports:
+    print(port.device)
 
 from Backend.Huffman import encode_string, huffman_code_tree, make_tree
 xml_folder = "C:/Users/henry/PycharmProjects/DataBase/Backend/local"  # Reemplaza con la ruta de tu carpeta existente
@@ -106,6 +113,7 @@ def agregar_usuario_xml(usuario, correo, contrasena):
     tree.write("C:/Users/henry/PycharmProjects/DataBase/Backend/usuarios.xml")
 
 def verificar_credenciales(usuario, contrasena):
+    arduino = serial.Serial('COM4', 9600)  # Reemplaza 'COM3' con tu puerto serie y 9600 con la velocidad de baudios correcta
     tree = ET.parse("C:/Users/henry/PycharmProjects/DataBase/Backend/usuarios.xml")
     root = tree.getroot()
     if "." in contrasena:
@@ -124,7 +132,13 @@ def verificar_credenciales(usuario, contrasena):
         stored_password = user.find('contrasena').text
 
         if username == usuario and stored_password == encoded_password:
+            time.sleep(2)
+            arduino.write(b'1')
+            arduino.close()
             return True
+    time.sleep(2)
+    arduino.write(b'2')
+    arduino.close()
     return False
 
 
