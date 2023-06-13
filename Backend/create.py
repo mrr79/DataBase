@@ -1,29 +1,28 @@
 import os
 import xml.etree.ElementTree as ET
-import re
-import shutil
-import ast
 
 class Create:
     """
     Clase que permite crear una carpeta con un archivo XML dentro.
     """
 
-    def create(self, input_str):
+    @staticmethod
+    def create_folder_with_xml(nombre, atributos):
         """
         Crea una carpeta con un archivo XML dentro.
 
-        :param input_str: Cadena de entrada que especifica el nombre y atributos.
-        :type input_str: str
+        :param nombre: Nombre de la carpeta y del archivo XML.
+        :type nombre: str
+        :param atributos: Lista de atributos para el archivo XML.
+        :type atributos: list[str]
         """
-        # Dividir el input en nombre y atributos
-        partes = input_str.split(" (")
-        nombre = partes[0]
-        atributos = partes[1][:-2].split(",")  # Remover el punto y coma final
-        
-        # Crear la carpeta con el nombre especificado
-        os.makedirs(nombre, exist_ok=True)
-        
+        # Ruta de la ubicación de guardado
+        ruta_guardado = r"C:\Users\henry\PycharmProjects\DataBase\Backend\local"
+
+        # Crear la carpeta con el nombre especificado en la ruta deseada
+        ruta_completa = os.path.join(ruta_guardado, nombre)
+        os.makedirs(ruta_completa, exist_ok=True)
+
         # Crear el contenido del archivo XML
         contenido = f"<{nombre}>\n"
         contenido += f"\t<{nombre}>\n"  # Agregar etiqueta adicional <estudiantes>
@@ -31,8 +30,8 @@ class Create:
             contenido += f"\t\t<{atributo}></{atributo}>\n"
         contenido += f"\t</{nombre}>\n"
         contenido += f"</{nombre}>"  # Cerrar etiqueta <estudiantes> adicional
-        
+
         # Crear el archivo XML dentro de la carpeta
-        archivo = open(f"{nombre}/{nombre}.xml", "w")
+        archivo = open(os.path.join(ruta_completa, f"{nombre}.xml"), "w")
         archivo.write(contenido)
         archivo.close()

@@ -1,0 +1,7 @@
+<perritos>
+	<perritos>
+		<nombre />
+		<dueno />
+		<numero />
+	</perritos>
+<nuevo><nombre>JUAN</nombre><dueno>2</dueno><numero>100</numero></nuevo><nuevo><nombre>alina</nombre><dueno>22</dueno><numero>200</numero></nuevo><nuevo><nombre>norma</nombre><dueno>21</dueno><numero>500</numero></nuevo></perritos>

@@ -4,27 +4,30 @@ import re
 import shutil
 import ast
 
-class Update:
+class Delete:
     """
-    Clase que representa una operación de actualizacion/modificacion en una base de datos XML.
+    Clase que permite borrar filas de un archivo XML.
     """
+
     def __init__(self, folder_path):
         """
-        Inicializa una instancia de la clase Update.
+        Inicializa la clase `Delete`.
 
-        :param folder_path: Ruta de la carpeta donde se encuentran los archivos XML.
+        :param folder_path: Ruta de la carpeta que contiene el archivo XML.
         :type folder_path: str
         """
         self.folder_path = folder_path
 
-    def execute_query(self, file_name, columns=None):
+    def execute_query(self, file_name, string_, columns=None, contador=0):
         """
-        Ejecuta una consulta de actualización en un archivo XML.
+        Ejecuta una consulta para borrar filas en el archivo XML.
 
         :param file_name: Nombre del archivo XML.
         :type file_name: str
-        :param columns: Columnas a actualizar.
-        :type columns: list[str] or None
+        :param columns: Lista de nombres de columnas a considerar, por defecto None.
+        :type columns: list, optional
+        :param contador: Contador para llevar la cuenta de las filas borradas, por defecto 0.
+        :type contador: int, optional
         """
         folder_name = file_name.split('.')[0]
         folder_path = os.path.join(self.folder_path, folder_name)
@@ -32,12 +35,15 @@ class Update:
 
         ruta_xml_original=folder_path+"/"+file_name
 
-
         tree = ET.parse(xml_file)
         root = tree.getroot()
 
         # Obtener los elementos de la tabla
         rows = root.findall('.//' + folder_name)
+
+        words = string_.split()
+        parts = string_.split("WHERE")
+        condiciones = parts[1].strip()
 
         # Verificar si hay filas en el archivo XML
         if len(rows) == 0:
@@ -46,16 +52,11 @@ class Update:
 
         # Obtener los nombres de los atributos
         if columns is None:
-            where_input = input("SET ")
-            attribute_value_pairs = [pair.strip() for pair in where_input.split(',')]
-            columns_input = [pair.split('=')[0].strip() for pair in attribute_value_pairs]
-            text_input = [pair.split('=')[1].strip() for pair in attribute_value_pairs]
-            if columns_input == ["*"]:
-                columns = [child.tag for child in rows[0]]
-            else:
-                columns = [column.strip() for column in columns_input] if columns_input else [child.tag for child in rows[0]]
+            columns = [child.tag for child in rows[0]]
 
-        ruta_local = '/home/mrr/Desktop/DataBase/local'
+        #ruta_local = '/home/mrr/Desktop/DataBase/local'
+        ruta_local = 'C:/Users/henry/PycharmProjects/DataBase/Backend/local'
+
         ruta_auxiliar = os.path.join(ruta_local, folder_name)
         if not os.path.exists(ruta_auxiliar):
             os.makedirs(ruta_auxiliar)
@@ -63,41 +64,40 @@ class Update:
         ruta_xml_modificado = os.path.join(ruta_auxiliar, file_name)
         shutil.copyfile(ruta_xml_original, ruta_xml_modificado)
 
-        answer = input("¿agregar WHERE? (Y/N): ")
+        # Imprimir las filas seleccionadas
+        if len(words) > 3:
+            answer = 'Y'
+        else:
+            answer = 'N'
         if answer.lower() == 'y':
-            where_conditions = input("WHERE ")
+            where_conditions = condiciones
             conditions = self.parse_conditions(where_conditions)
             filtered_rows = self.filter_rows(rows, conditions)
         else:
             filtered_rows = rows
 
-        # Imprimir las filas seleccionadas
+        # borarr las filas seleccionadas
         for row in filtered_rows:
-            values = [row.find(attribute) for attribute in columns]
-            for value, text in zip(values, text_input):
-                value.text = text
-            #print([value.text for value in values])
+            root.remove(row)
+            contador = contador+1
+
+        if contador == 1:
+            print("DELETE hecho en 1 instancia")
+        elif contador > 1:
+            print("DELETE hecho en varias instancias")
 
         tree.write(ruta_xml_modificado)
-
-        respuesta = input("¿Hacer commit? (Y/N): ")
-
-        if respuesta.upper() == "Y":
-            # Copiar el archivo modificado a la ubicación del archivo original
-            shutil.copyfile(ruta_xml_modificado, ruta_xml_original)
-            print("El archivo modificado se ha guardado tanto en la ubicación original como en la carpeta 'Local'.")
-        else:
-            print("El archivo modificado se ha guardado únicamente en la carpeta 'Local'.")
-
+        #               AQUI YA SE BORRO, ENTONCES AQUI VA LA SENAL PARA EL ARDUINO.
+        
 
     def parse_conditions(self, where_conditions):
         """
-        Parsea las condiciones de la cláusula WHERE.
+        Analiza las condiciones de la cláusula WHERE.
 
-        :param where_conditions: Condiciones de la cláusula WHERE.
+        :param where_conditions: Condiciones especificadas en la cláusula WHERE.
         :type where_conditions: str
-        :return: Condiciones parseadas.
-        :rtype: list[list[str]]
+        :return: Condiciones analizadas.
+        :rtype: list
         """
         conditions = []
         condition_groups = re.split(r'\bOR\b', where_conditions)  # Separar las condiciones por "OR"
@@ -108,14 +108,14 @@ class Update:
 
     def filter_rows(self, rows, conditions):
         """
-        Filtra las filas de acuerdo a las condiciones especificadas.
+        Filtra las filas según las condiciones especificadas.
 
         :param rows: Filas a filtrar.
-        :type rows: list[xml.etree.ElementTree.Element]
+        :type rows: list
         :param conditions: Condiciones de filtrado.
-        :type conditions: list[list[str]]
+        :type conditions: list
         :return: Filas filtradas.
-        :rtype: list[xml.etree.ElementTree.Element]
+        :rtype: list
         """
         filtered_rows = []
         for row in rows:

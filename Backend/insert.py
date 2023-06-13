@@ -17,9 +17,9 @@ class Insert:
         :param folder_path: Ruta de la carpeta de la base de datos.
         :type folder_path: str
         """
-        self.folder_path = folder_path
+        self.folder_path = 'folder_path'
 
-    def execute_query(self, input_insert):
+    def execute_query(self, input_insert, string_):
         """
         Ejecuta una consulta de inserción en la base de datos.
 
@@ -33,9 +33,11 @@ class Insert:
         pattern = r'(\w+)\s*\((.+)\)'
 
         # Find matches with the pattern in the input_insert string
+        print("AAAAAA")
         matches = re.match(pattern, input_insert)
 
         if matches:
+            print('ssssssssssssss')
             # Extract the file name and attributes
             file_name = matches.group(1)
             attributes = matches.group(2).split(',')
@@ -46,15 +48,15 @@ class Insert:
 
             # Construct the file path
             folder_name = re.sub(r'\W+', '', file_name)
-            xml_file = os.path.join(file_name, file_name + ".xml")
-
+            xml_file = os.path.join("C:/Users/henry/PycharmProjects/DataBase/Backend/disco", file_name, file_name + ".xml")
+            print(xml_file)
             file_tree = ET.parse(xml_file)
             file_root = file_tree.getroot()
             file_rows = file_root.findall('.//' + file_name)
 
             #print("INSERT INTO ", file_rows)
 
-            values_input = input("VALUES ")
+            values_input = string_
             values_input = values_input.strip(';')
             values_list = [tuple(value.strip().strip('()').split(',')) for value in values_input.split('),(')]
             #print("Lista de tuplas:")
@@ -64,6 +66,8 @@ class Insert:
             return file_name, attributes_str, xml_file, attributes_str
 
         else:
+            print('DDDDDDDDDD')
+
             # If no match is found, return None
             return None
 
@@ -83,13 +87,14 @@ class Insert:
         :param ruta_local: Ruta de la carpeta local.
         :type ruta_local: str, optional
         """
-        #print("                             estoy en UPDATE DENTRO  ")
-        ruta_local = '/home/mrr/Desktop/DataBase/local'
+        print("                             estoy en UPDATE DENTRO  ")
+        #ruta_local = '/home/mrr/Desktop/DataBase/local'
+        ruta_local = 'C:/Users/henry/PycharmProjects/DataBase/Backend/local'
         ruta_auxiliar = os.path.join(ruta_local, file_name)
         if not os.path.exists(ruta_auxiliar):
             os.makedirs(ruta_auxiliar)
 
-        ruta_xml_modificado = os.path.join(ruta_auxiliar, 'productos.xml')
+        ruta_xml_modificado = os.path.join(ruta_auxiliar, file_name+".xml")
         shutil.copyfile(ruta_xml_original, ruta_xml_modificado)
 
         tree = ET.parse(ruta_xml_modificado)
@@ -103,15 +108,10 @@ class Insert:
                 atributo.text = str(value[i])
 
             root.append(nuevo_)
+            print("se hizo")
+            print(ruta_xml_modificado)
 
         # Guardar los cambios en el archivo XML modificado
         tree.write(ruta_xml_modificado)
 
-        respuesta = input("¿Hacer commit? (Y/N): ")
-
-        if respuesta.upper() == "Y":
-            # Copiar el archivo modificado a la ubicación del archivo original
-            shutil.copyfile(ruta_xml_modificado, ruta_xml_original)
-            print("El archivo modificado se ha guardado tanto en la ubicación original como en la carpeta 'Local'.")
-        else:
-            print("El archivo modificado se ha guardado únicamente en la carpeta 'Local'.")
+        print("INSERT realizado correctamente")

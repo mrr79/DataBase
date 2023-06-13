@@ -1,6 +1,3 @@
-from huffman import encode_string
-
-encoded_string = encode_string(string, encoding)
 
 def morse_to_text(codigo_morse):
     """
@@ -33,7 +30,6 @@ def morse_to_text(codigo_morse):
     return texto_traducido
 
 
-codigo_morse = '-- .- .-. .. .- -. .-'
-texto_traducido = morse_to_text(codigo_morse)
-print(texto_traducido)
-print (encoded_string)
+#codigo_morse = '-- .- .-. .. .- -. .-'
+#texto_traducido = morse_to_text(codigo_morse)
+#print(texto_traducido)

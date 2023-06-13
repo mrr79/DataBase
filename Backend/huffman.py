@@ -1,43 +1,21 @@
 from collections import Counter
+
+
 class NodeTree(object):
-    """
-    Clase que representa un nodo en el árbol de código Huffman.
-    """
-
     def __init__(self, left=None, right=None):
-        """
-        Inicializa un nodo del árbol de código Huffman.
-
-        :param left: Nodo izquierdo.
-        :type left: NodeTree, optional
-        :param right: Nodo derecho.
-        :type right: NodeTree, optional
-        """
         self.left = left
         self.right = right
 
     def children(self):
-        """
-        Devuelve los nodos hijos.
-
-        :return: Tupla con los nodos izquierdo y derecho.
-        :rtype: tuple
-        """
         return self.left, self.right
 
     def __str__(self):
-        """
-        Representación en cadena del nodo.
-
-        :return: Cadena que representa el nodo.
-        :rtype: str
-        """
         return self.left, self.right
 
 
 def huffman_code_tree(node, binString=''):
     '''
-    Función para encontrar el código Huffman.
+    Function to find Huffman Code
     '''
     if type(node) is str:
         return {node: binString}
@@ -49,14 +27,11 @@ def huffman_code_tree(node, binString=''):
 
 
 def make_tree(nodes):
-    """
-    Crea el árbol de código Huffman a partir de los nodos.
-
-    :param nodes: Lista de tuplas (carácter, frecuencia).
-    :type nodes: list
-    :return: Nodo raíz del árbol de código Huffman.
-    :rtype: NodeTree
-    """
+    '''
+    Function to make tree
+    :param nodes: Nodes
+    :return: Root of the tree
+    '''
     while len(nodes) > 1:
         (key1, c1) = nodes[-1]
         (key2, c2) = nodes[-2]
@@ -67,16 +42,6 @@ def make_tree(nodes):
     return nodes[0][0]
 
 def encode_string(string, encoding):
-    """
-    Codifica una cadena utilizando el código Huffman.
-
-    :param string: Cadena a codificar.
-    :type string: str
-    :param encoding: Diccionario de codificación.
-    :type encoding: dict
-    :return: Cadena codificada.
-    :rtype: str
-    """
     encoded_string = ""
     for char in string:
         encoded_string += encoding[char]
